@@ -8,7 +8,24 @@ and placement outcomes.
 [Add your Netlify URL here]
 
 ## 📸 Screenshots
-[Add screenshots here]
+
+### 🔐 Login Page
+![Login Page](images/login.png)
+
+### 📝 Register Page
+![Register Page](images/register.png)
+
+### 🎓 Student Dashboard
+![Student Dashboard](images/dashboard.png)
+
+### 🔧 Admin Panel - Companies
+![Admin Companies](images/admin%201.png)
+
+### 👥 Admin Panel - Applications
+![Admin Applications](images/admin%202.png)
+
+### 📊 Admin Panel - Stats
+![Admin Stats](images/admin%203.png)
 
 ## ✨ Features
 
