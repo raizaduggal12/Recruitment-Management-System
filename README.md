@@ -5,7 +5,7 @@ student profiles, company listings, eligibility filtering, job applications,
 and placement outcomes.
 
 ## 🌐 Live Demo
-[Add your Netlify URL here]
+https://recruitmentmanage.netlify.app/
 
 ## 📸 Screenshots
 
