@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Placement Portal</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="static/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="static/js/config.js"></script>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a class="navbar-brand" href="admin.html">
+      Placement <span>Admin</span>
+    </a>
+    <div class="navbar-right">
+      <span class="navbar-user">Admin Panel</span>
+      <button class="btn btn-outline btn-sm" id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <div class="page-container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h2>Admin Panel</h2>
+      <p>Manage companies, students and application statuses</p>
+    </div>
+
+    <!-- Alert messages -->
+    <div id="msg" class="alert"></div>
+
+    <!-- Stats Section -->
+    <div class="stats-grid" id="statsGrid">
+      <div class="stat-card">
+        <div class="stat-value" id="statStudents">—</div>
+        <div class="stat-label">Total Students</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statApplications">—</div>
+        <div class="stat-label">Total Applications</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statSelected">—</div>
+        <div class="stat-label">Students Selected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="statCompanies">—</div>
+        <div class="stat-label">Companies Listed</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="companies">Companies</button>
+      <button class="tab-btn" data-tab="add-company">Add Company</button>
+      <button class="tab-btn" data-tab="students">Students</button>
+      <button class="tab-btn" data-tab="applications">Applications</button>
+    </div>
+
+    <!-- Tab: Companies -->
+    <div class="tab-panel active" id="tab-companies">
+      <div id="companiesTableContainer">
+        <p class="loading-text">Loading companies...</p>
+      </div>
+    </div>
+
+    <!-- Tab: Add Company -->
+    <div class="tab-panel" id="tab-add-company">
+      <div class="panel-card">
+        <h3 id="companyFormTitle">Add New Company</h3>
+        <input type="hidden" id="editCompanyId" />
+
+        <div id="companyFormMsg" class="alert"></div>
+
+        <form id="companyForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Company Name</label>
+              <input type="text" id="cName" placeholder="Google" required />
+            </div>
+            <div class="form-group">
+              <label>Role / Position</label>
+              <input type="text" id="cRole" placeholder="Software Engineer" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="cDesc" placeholder="Brief about the role and company..."></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Minimum CGPA</label>
+              <input type="number" id="cMinCgpa" placeholder="7.0" step="0.1" min="0" max="10" required />
+            </div>
+            <div class="form-group">
+              <label>Graduation Year</label>
+              <input type="number" id="cGradYear" placeholder="2025" min="2020" max="2030" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Allowed Branches (comma-separated)</label>
+              <input type="text" id="cBranches" placeholder="CSE,ECE,IT" required />
+            </div>
+            <div class="form-group">
+              <label>Application Deadline</label>
+              <input type="date" id="cDeadline" required />
+            </div>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; margin-top:0.5rem;">
+            <button type="submit" class="btn btn-primary" id="companyFormBtn">Add Company</button>
+            <button type="button" class="btn btn-outline" id="cancelEditBtn" style="display:none;" onclick="cancelEdit()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tab: Students -->
+    <div class="tab-panel" id="tab-students">
+      <div id="studentsTableContainer">
+        <p class="loading-text">Loading students...</p>
+      </div>
+    </div>
+
+    <!-- Tab: Applications -->
+    <div class="tab-panel" id="tab-applications">
+      <div id="applicationsTableContainer">
+        <p class="loading-text">Loading applications...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="static/js/admin.js"></script>
+</body>
+</html>

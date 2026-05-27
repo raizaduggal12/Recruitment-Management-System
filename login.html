@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Placement Portal</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="static/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="static/js/config.js"></script>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <h1>Placement Portal</h1>
+      <p class="subtitle">Sign in to your account</p>
+
+      <div id="msg" class="alert"></div>
+
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn btn-primary form-btn" id="loginBtn">Sign In</button>
+      </form>
+
+      <div class="auth-link">
+        Don't have an account? <a href="register.html">Register here</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="static/js/auth.js"></script>
+  <script>
+    // Redirect if already logged in
+    (async () => {
+      const { data: { session } } = await _supabase.auth.getSession();
+      if (session) window.location.href = 'index.html';
+    })();
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+      showMsg('', '');
+
+      const result = await loginUser(email, password);
+
+      if (result.error) {
+        showMsg(result.error, 'error');
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      } else {
+        showMsg('Login successful! Redirecting...', 'success');
+        setTimeout(() => window.location.href = 'index.html', 800);
+      }
+    });
+
+    // Helper to show message box
+    function showMsg(text, type) {
+      const el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'alert';
+      if (type === 'success') el.classList.add('alert-success', 'show');
+      else if (type === 'error') el.classList.add('alert-error', 'show');
+    }
+  </script>
+</body>
+</html>

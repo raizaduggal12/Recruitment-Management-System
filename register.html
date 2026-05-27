@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — Placement Portal</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="static/css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="static/js/config.js"></script>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card" style="max-width: 560px;">
+      <h1>Create Account</h1>
+      <p class="subtitle">Register as a student on the placement portal</p>
+
+      <div id="msg" class="alert"></div>
+
+      <form id="registerForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" placeholder="John Doe" required />
+          </div>
+          <div class="form-group">
+            <label for="rollNumber">Roll Number</label>
+            <input type="text" id="rollNumber" placeholder="21CS001" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@college.edu" required />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="9876543210" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Min. 6 characters" required minlength="6" />
+          </div>
+          <div class="form-group">
+            <label for="branch">Branch</label>
+            <select id="branch" required>
+              <option value="">Select branch</option>
+              <option value="CSE">CSE</option>
+              <option value="ECE">ECE</option>
+              <option value="ME">ME</option>
+              <option value="CE">CE</option>
+              <option value="EE">EE</option>
+              <option value="IT">IT</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cgpa">CGPA</label>
+            <input type="number" id="cgpa" placeholder="8.5" step="0.01" min="0" max="10" required />
+          </div>
+          <div class="form-group">
+            <label for="gradYear">Graduation Year</label>
+            <input type="number" id="gradYear" placeholder="2025" min="2020" max="2030" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="resumeLink">Resume Link (Google Drive / URL)</label>
+          <input type="url" id="resumeLink" placeholder="https://drive.google.com/..." />
+        </div>
+
+        <button type="submit" class="btn btn-primary form-btn" id="registerBtn">Create Account</button>
+      </form>
+
+      <div class="auth-link">
+        Already have an account? <a href="login.html">Sign in here</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="static/js/auth.js"></script>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('registerBtn');
+      btn.disabled = true;
+      btn.textContent = 'Creating account...';
+      showMsg('', '');
+
+      const formData = {
+        fullName: document.getElementById('fullName').value.trim(),
+        rollNumber: document.getElementById('rollNumber').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        password: document.getElementById('password').value,
+        branch: document.getElementById('branch').value,
+        cgpa: parseFloat(document.getElementById('cgpa').value),
+        gradYear: parseInt(document.getElementById('gradYear').value),
+        resumeLink: document.getElementById('resumeLink').value.trim(),
+      };
+
+      const result = await registerUser(formData);
+
+      if (result.error) {
+        showMsg(result.error, 'error');
+        btn.disabled = false;
+        btn.textContent = 'Create Account';
+      } else {
+        showMsg('Account created successfully! Redirecting to login...', 'success');
+        setTimeout(() => window.location.href = 'login.html', 1500);
+      }
+    });
+
+    function showMsg(text, type) {
+      const el = document.getElementById('msg');
+      el.textContent = text;
+      el.className = 'alert';
+      if (type === 'success') el.classList.add('alert-success', 'show');
+      else if (type === 'error') el.classList.add('alert-error', 'show');
+    }
+  </script>
+</body>
+</html>
