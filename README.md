@@ -1,4 +1,4 @@
-# 🎓 Campus Placement Management System
+# 🎓 Recruitment-Management-System
 
 A centralized placement management system built for colleges to handle 
 student profiles, company listings, eligibility filtering, job applications, 
